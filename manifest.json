@@ -4,9 +4,7 @@
   "name": "Change Color Facebook",
   "version": "1.0",
 
-
   "description": "Escolha a cor do seu facebook",
-
 
   "page_action": {
     "default_icon": {
@@ -19,7 +17,9 @@
 
   "permissions": [
     "tabs",
-    "declarativeContent"
+    "declarativeContent",
+    "activeTab",
+    "storage"
   ],
 
 
@@ -28,17 +28,6 @@
       "background.js"
     ],
     "persistent": false
-  },
+  }
 
-  "content_scripts": [
-    {
-      "js": [
-        "inject/jquery.js",
-        "inject/batbook.js"
-      ],
-      "matches": [
-        "https://*.facebook.com/*"
-      ]
-    }
-  ]
 }
