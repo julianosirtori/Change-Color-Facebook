@@ -1,0 +1,44 @@
+{
+
+  "manifest_version": 2,
+  "name": "Change Color Facebook",
+  "version": "1.0",
+
+
+  "description": "Escolha a cor do seu facebook",
+
+
+  "page_action": {
+    "default_icon": {
+      "19": "icon19.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Batbook"
+  },
+
+
+  "permissions": [
+    "tabs",
+    "declarativeContent"
+  ],
+
+
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "js": [
+        "inject/jquery.js",
+        "inject/batbook.js"
+      ],
+      "matches": [
+        "https://*.facebook.com/*"
+      ]
+    }
+  ]
+}
