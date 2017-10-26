@@ -16,6 +16,7 @@ const colors = {
 };
 
 function changeBackgroundColor(color) {
+    // script para alterar a cor do facebook de acordo com a cor selecionada
     let script = " var faceHeader = document.querySelector('._2s1x ._2s1y');\n" +
         "faceHeader.style.backgroundColor = '" + color + "';\n" +
         "faceHeader.style.borderBottom = '1px  solid " + color + "';\n" +
@@ -26,9 +27,35 @@ function changeBackgroundColor(color) {
     });
 }
 
+function saveColor(color) {
+    if (!color)
+        throw "Color is null";
+
+
+    chrome.storage.sync.set({'color': color}, function () {
+        console.log("Color saved");
+    });
+}
+
+function getSavedColor(callback) {
+    chrome.storage.sync.get('color', (items) => {
+        callback(chrome.runtime.lastError ? null : items['color']);
+    });
+}
+
 
 // adiciona um listener ao evento DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
+    chrome.storage.local.get('color', function (data) {
+        console.log(data);
+    });
+
+    getSavedColor((color) => {
+        changeBackgroundColor(colors[color]);
+
+    });
+
+
     //pega todos os elementos que possuem a classe cor
     let corSelect = document.querySelectorAll('.cor');
     // percorre todos os elementos
@@ -38,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //pega a cor da div
             let color = item.getAttribute('class').replace(/cor /g, "").trim();
             changeBackgroundColor(colors[color]);
+            saveColor(color);
         });
     });
 });
